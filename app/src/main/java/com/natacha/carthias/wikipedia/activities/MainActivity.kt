@@ -1,15 +1,13 @@
-package com.natacha.carthias.wikipedia
+package com.natacha.carthias.wikipedia.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.natacha.carthias.wikipedia.ui.ArticleDetailActivity
+import com.natacha.carthias.wikipedia.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var textHome: TextView?
-        textHome = findViewById(R.id.text_home)
+
+
 
 
 
@@ -38,9 +36,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-        textHome.setOnClickListener { _ ->
-            val intent = Intent(this, ArticleDetailActivity::class.java)
-            startActivity(intent)
+
         }
 
 
@@ -49,4 +45,4 @@ class MainActivity : AppCompatActivity() {
 
 
 
-}
+
