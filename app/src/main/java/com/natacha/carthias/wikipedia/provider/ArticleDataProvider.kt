@@ -20,15 +20,16 @@ class ArticleDataProvider {
     }
 
     fun search(term: String, skip: Int, take: Int, responseHandler: (result: WikiResult) -> Unit?) {
-        Urls.getSearchUrl(term, skip, take).httpGet().responseObject(WikipediaDataDeserializer()){
-            _, response, result ->
+        Urls.getSearchUrl(term, skip, take).httpGet()
+            .responseObject(WikipediaDataDeserializer()) { _, response, result ->
 
-            if(response.statusCode != 200) {
-                throw Exception("Unable to get articles")
+                if (response.statusCode != 200) {
+                    throw Exception("Unable to get articles")
+                }
+                val (data, _) = result
+                responseHandler.invoke(data as @kotlin.ParameterName(name = "result") WikiResult)
             }
-            val(data, _) = result
-            responseHandler.invoke(data as @kotlin.ParameterName(name = "result") WikiResult)
-        }
+    }
 
         fun getRandom(take: Int, responseHandler: (result: WikiResult) -> Unit?) {
             Urls.getRandomUrl(take).httpGet()
@@ -41,7 +42,7 @@ class ArticleDataProvider {
                     responseHandler.invoke(data as @kotlin.ParameterName(name = "result") WikiResult)
                 }
         }
-    }
+
 
     class WikipediaDataDeserializer : ResponseDeserializable<WikiResult> {
         override fun deserialize(reader: Reader) = Gson().fromJson(reader, WikiResult::class.java)
