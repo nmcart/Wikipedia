@@ -4,7 +4,7 @@ import android.app.Application
 import com.natacha.carthias.wikipedia.managers.WikiManager
 import com.natacha.carthias.wikipedia.provider.ArticleDataProvider
 import com.natacha.carthias.wikipedia.repositories.ArticleDatabaseOpenHelper
-import com.natacha.carthias.wikipedia.repositories.FavoritesRespository
+import com.natacha.carthias.wikipedia.repositories.FavoritesRepository
 import com.natacha.carthias.wikipedia.repositories.HistoryRepository
 
 /**
@@ -17,7 +17,7 @@ import com.natacha.carthias.wikipedia.repositories.HistoryRepository
 class WikiApplication: Application() {
 
     var dbHelper: ArticleDatabaseOpenHelper? = null
-    var favoritesRespository: FavoritesRespository? = null
+    var favoritesRespository: FavoritesRepository? = null
     var historyRepository: HistoryRepository? = null
     var wikiProvider: ArticleDataProvider? = null
     var wikiManager: WikiManager? = null
@@ -27,7 +27,7 @@ class WikiApplication: Application() {
         super.onCreate()
 
         dbHelper = ArticleDatabaseOpenHelper(applicationContext)
-        favoritesRespository = FavoritesRespository(dbHelper!!)
+        favoritesRespository = FavoritesRepository(dbHelper!!)
         historyRepository = HistoryRepository(dbHelper!!)
         wikiProvider = ArticleDataProvider()
         wikiManager = WikiManager(wikiProvider!!, favoritesRespository!!, historyRepository!!)

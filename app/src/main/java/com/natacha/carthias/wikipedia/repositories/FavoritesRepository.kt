@@ -6,15 +6,17 @@ import com.natacha.carthias.wikipedia.models.WikiThumbnail
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.rowParser
+import org.jetbrains.anko.db.select
 
 /**
  * Created by Natacha Carthias on 30/10/2019
  */
 
-class FavoritesRespository(val databaseHelper: ArticleDatabaseOpenHelper) {
+class FavoritesRepository(val databaseHelper: ArticleDatabaseOpenHelper) {
+
     private val TABLE_NAME: String = "Favorites"
 
-// Adds page to the database column using current data
+    // Adds page to the database column using current data
     fun addFavorite(page: WikiPage) {
         databaseHelper.use {
             insert(TABLE_NAME,
@@ -25,7 +27,7 @@ class FavoritesRespository(val databaseHelper: ArticleDatabaseOpenHelper) {
         }
     }
 
-// Removes page from database column
+    // Removes page from database column
     fun removeFavoriteById(pageId: Int) {
         databaseHelper.use {
             delete(TABLE_NAME, "id = {pageId}", "pageId" to pageId)
@@ -35,7 +37,7 @@ class FavoritesRespository(val databaseHelper: ArticleDatabaseOpenHelper) {
     fun isArticleFavorite(pageId: Int) : Boolean {
         var pages = getAllFavorites()
         return pages.any {
-            page ->
+                page ->
             page.pageid == pageId
         }
     }
@@ -53,6 +55,12 @@ class FavoritesRespository(val databaseHelper: ArticleDatabaseOpenHelper) {
             pages.add(page)
 
         }
+
+        databaseHelper.use {
+            select(TABLE_NAME).parseList(articleRowParser)
+        }
+
+
 
         return pages
     }

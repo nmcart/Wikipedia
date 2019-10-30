@@ -3,7 +3,7 @@ package com.natacha.carthias.wikipedia.managers
 import com.natacha.carthias.wikipedia.models.WikiPage
 import com.natacha.carthias.wikipedia.models.WikiResult
 import com.natacha.carthias.wikipedia.provider.ArticleDataProvider
-import com.natacha.carthias.wikipedia.repositories.FavoritesRespository
+import com.natacha.carthias.wikipedia.repositories.FavoritesRepository
 import com.natacha.carthias.wikipedia.repositories.HistoryRepository
 
 /**
@@ -11,7 +11,7 @@ import com.natacha.carthias.wikipedia.repositories.HistoryRepository
  */
 
 class WikiManager(private val provider: ArticleDataProvider,
-                  private val favoritesRepository: FavoritesRespository,
+                  private val favoritesRepository: FavoritesRepository,
                   private val historyRepository: HistoryRepository) {
 
     // Allows access to data without always querying SQLite database

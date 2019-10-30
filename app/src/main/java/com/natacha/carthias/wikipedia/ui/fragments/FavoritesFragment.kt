@@ -2,7 +2,6 @@ package com.natacha.carthias.wikipedia.ui.fragments
 
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,12 +15,15 @@ import com.natacha.carthias.wikipedia.R
 import com.natacha.carthias.wikipedia.WikiApplication
 import com.natacha.carthias.wikipedia.adapters.ArticleCardRecyclerAdapter
 import com.natacha.carthias.wikipedia.managers.WikiManager
+import com.natacha.carthias.wikipedia.models.WikiPage
+import org.jetbrains.anko.doAsync
 
 /**
  * A simple [Fragment] subclass.
  */
 class FavoritesFragment : Fragment() {
 
+    private val adapter: ArticleCardRecyclerAdapter = ArticleCardRecyclerAdapter()
     private var wikiManager: WikiManager? = null
     var favoritesRecycler: RecyclerView? = null
 
@@ -38,15 +40,27 @@ class FavoritesFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.title = "Wikipedia"
 
-        val view = inflater!!.inflate(R.layout.fragment_favorites, container, false)
+        val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
         favoritesRecycler = view.findViewById(R.id.favorites_article_recycler)
 
         favoritesRecycler!!.layoutManager = LinearLayoutManager(context)
-        favoritesRecycler!!.adapter = ArticleCardRecyclerAdapter()
+        favoritesRecycler!!.adapter = adapter
 
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        // Does not run on the UI thread
+        doAsync {
+            val favoriteArticles = wikiManager!!.getFavorites()
+            adapter.currentResults.clear()
+            adapter.currentResults.addAll(favoriteArticles as ArrayList<WikiPage>)
+
+            // Adapter must be run on UI thread
+            activity?.runOnUiThread { adapter.notifyDataSetChanged() }
+        }
+    }
 }
