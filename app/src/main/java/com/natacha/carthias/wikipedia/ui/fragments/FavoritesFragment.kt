@@ -1,6 +1,7 @@
 package com.natacha.carthias.wikipedia.ui.fragments
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,18 +13,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.natacha.carthias.wikipedia.R
-import com.natacha.carthias.wikipedia.activities.SearchActivity
+import com.natacha.carthias.wikipedia.WikiApplication
 import com.natacha.carthias.wikipedia.adapters.ArticleCardRecyclerAdapter
-import com.natacha.carthias.wikipedia.adapters.ArticleListItemRecyclerAdapter
-import kotlinx.android.synthetic.main.fragment_explore.*
-import kotlinx.android.synthetic.main.fragment_favorites.*
+import com.natacha.carthias.wikipedia.managers.WikiManager
 
 /**
  * A simple [Fragment] subclass.
  */
 class FavoritesFragment : Fragment() {
 
+    private var wikiManager: WikiManager? = null
     var favoritesRecycler: RecyclerView? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        wikiManager = (activity?.applicationContext as WikiApplication).wikiManager
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

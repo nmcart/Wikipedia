@@ -1,6 +1,7 @@
 package com.natacha.carthias.wikipedia.ui.fragments
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,9 +15,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.natacha.carthias.wikipedia.R
+import com.natacha.carthias.wikipedia.WikiApplication
 import com.natacha.carthias.wikipedia.activities.SearchActivity
 import com.natacha.carthias.wikipedia.adapters.ArticleCardRecyclerAdapter
-import com.natacha.carthias.wikipedia.provider.ArticleDataProvider
+import com.natacha.carthias.wikipedia.managers.WikiManager
 
 
 /**
@@ -24,11 +26,17 @@ import com.natacha.carthias.wikipedia.provider.ArticleDataProvider
  */
 class ExploreFragment : Fragment() {
 
-    private val articleProvider: ArticleDataProvider = ArticleDataProvider()
+    private var wikiManager: WikiManager? = null
     var searchCardView: CardView? = null
     var exploreRecycler: RecyclerView? = null
     var refresher: SwipeRefreshLayout? = null
     var adapter: ArticleCardRecyclerAdapter = ArticleCardRecyclerAdapter()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        wikiManager = (activity?.applicationContext as WikiApplication).wikiManager
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +72,7 @@ class ExploreFragment : Fragment() {
         refresher?.isRefreshing = true
 
 
-        articleProvider.getRandom(15, {wikiResult ->
+        wikiManager?.getRandom(15, {wikiResult ->
             adapter.currentResults.clear()
             adapter.currentResults.addAll(wikiResult.query!!.pages)
             activity!!.runOnUiThread {adapter.notifyDataSetChanged()

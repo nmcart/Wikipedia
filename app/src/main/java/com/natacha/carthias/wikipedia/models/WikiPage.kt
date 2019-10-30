@@ -6,7 +6,7 @@ package com.natacha.carthias.wikipedia.models
 
 class WikiPage {
 
-    val pageid: Int? = null
+    var pageid: Int? = null
     var title: String? = null
     var fullurl: String? = null
     var thumbnail:WikiThumbnail? = null
