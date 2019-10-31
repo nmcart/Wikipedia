@@ -10,7 +10,6 @@ import com.natacha.carthias.wikipedia.R
 import com.natacha.carthias.wikipedia.activities.ArticleDetailActivity
 import com.natacha.carthias.wikipedia.models.WikiPage
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.article_card_item.view.*
 
 /**
  * Created by Natacha Carthias on 28/10/2019
@@ -24,8 +23,8 @@ class ListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     init {
         itemView.setOnClickListener{ view: View? ->
-            var detailPageIntent = Intent(itemView.context, ArticleDetailActivity::class.java)
-            var pageJson = Gson().toJson(currentPage)
+            val detailPageIntent = Intent(itemView.context, ArticleDetailActivity::class.java)
+            val pageJson = Gson().toJson(currentPage)
             detailPageIntent.putExtra("page", pageJson)
             itemView.context.startActivity(detailPageIntent)
         }
@@ -33,6 +32,8 @@ class ListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     fun updateWithPage(page: WikiPage){
 
+        // Avoid showing the wrong images in pages without images
+        articleImageView.setImageResource(R.drawable.ic_image_black_24dp)
 
         if(page.thumbnail != null)
             Picasso.with(itemView.context).load(page.thumbnail!!.source).into(articleImageView)

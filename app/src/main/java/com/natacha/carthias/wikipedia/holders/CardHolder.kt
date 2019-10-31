@@ -24,8 +24,8 @@ class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     init {
         itemView.setOnClickListener{ view: View? ->
-            var detailPageIntent = Intent(itemView.context, ArticleDetailActivity::class.java)
-            var pageJson = Gson().toJson(currentPage)
+            val detailPageIntent = Intent(itemView.context, ArticleDetailActivity::class.java)
+            val pageJson = Gson().toJson(currentPage)
             detailPageIntent.putExtra("page", pageJson)
             itemView.context.startActivity(detailPageIntent)
         }
@@ -33,8 +33,8 @@ class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     fun updateWithPage(page: WikiPage){
 
-        // Avoid showing images in pages without images
-        articleImageView.setImageDrawable(null)
+        // Avoid showing the wrong images in pages without images
+        articleImageView.setImageResource(R.drawable.ic_image_black_24dp)
 
         if(page.thumbnail != null)
             Picasso.with(itemView.context).load(page.thumbnail!!.source).into(articleImageView)
