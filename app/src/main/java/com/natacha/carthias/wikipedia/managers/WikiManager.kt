@@ -60,6 +60,12 @@ class WikiManager(private val provider: ArticleDataProvider,
     fun clearHistory() {
         historyCache?.clear()
         val allHistory = historyRepository.getAllHistory()
-        allHistory?.forEach { historyRepository.removePageById(it.pageid!!)}
+        allHistory.forEach { historyRepository.removePageById(it.pageid!!)}
+    }
+
+    fun clearFavorites() {
+        favoritesCache?.clear()
+        val allFavorites = favoritesRepository.getAllFavorites()
+        allFavorites.forEach { favoritesRepository.removeFavoriteById(it.pageid!!)}
     }
 }
