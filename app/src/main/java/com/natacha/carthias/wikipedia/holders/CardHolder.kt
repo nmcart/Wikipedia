@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.article_card_item.view.*
  */
 
 class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-    private val articleImageView: ImageView = itemView.findViewById<ImageView>(R.id.article_image)
+    private val articleImageView: ImageView = itemView.findViewById(R.id.article_image)
     private val titleTextView: TextView = itemView.findViewById(R.id.article_title)
 
     private var currentPage: WikiPage? = null
@@ -32,11 +32,15 @@ class CardHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     }
 
     fun updateWithPage(page: WikiPage){
-        currentPage = page
-        titleTextView.text = page.title
+
+        // Avoid showing images in pages without images
+        articleImageView.setImageDrawable(null)
 
         if(page.thumbnail != null)
             Picasso.with(itemView.context).load(page.thumbnail!!.source).into(articleImageView)
+
+        titleTextView.text = page.title
+        currentPage = page
     }
 
 }

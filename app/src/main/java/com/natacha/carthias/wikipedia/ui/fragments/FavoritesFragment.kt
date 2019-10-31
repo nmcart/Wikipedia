@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 import com.natacha.carthias.wikipedia.R
 import com.natacha.carthias.wikipedia.WikiApplication
@@ -23,7 +23,7 @@ import org.jetbrains.anko.doAsync
  */
 class FavoritesFragment : Fragment() {
 
-    private val adapter: ArticleCardRecyclerAdapter = ArticleCardRecyclerAdapter()
+    private val adapter = ArticleCardRecyclerAdapter()
     private var wikiManager: WikiManager? = null
     var favoritesRecycler: RecyclerView? = null
 
@@ -44,7 +44,8 @@ class FavoritesFragment : Fragment() {
 
         favoritesRecycler = view.findViewById(R.id.favorites_article_recycler)
 
-        favoritesRecycler!!.layoutManager = LinearLayoutManager(context)
+        favoritesRecycler!!.layoutManager = StaggeredGridLayoutManager(2,
+            StaggeredGridLayoutManager.VERTICAL)
         favoritesRecycler!!.adapter = adapter
 
         return view
@@ -60,7 +61,7 @@ class FavoritesFragment : Fragment() {
             adapter.currentResults.addAll(favoriteArticles as ArrayList<WikiPage>)
 
             // Adapter must be run on UI thread
-            activity?.runOnUiThread { adapter.notifyDataSetChanged() }
+            activity?.runOnUiThread{adapter.notifyDataSetChanged()}
         }
     }
 }

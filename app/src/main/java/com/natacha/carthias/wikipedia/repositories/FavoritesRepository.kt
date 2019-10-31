@@ -34,7 +34,7 @@ class FavoritesRepository(val databaseHelper: ArticleDatabaseOpenHelper) {
         }
     }
 
-    fun isArticleFavorite(pageId: Int) : Boolean {
+    fun isArticleFavorite(pageId: Int) : Boolean{
         var pages = getAllFavorites()
         return pages.any {
                 page ->
@@ -53,14 +53,11 @@ class FavoritesRepository(val databaseHelper: ArticleDatabaseOpenHelper) {
             page.thumbnail = Gson().fromJson(thumbnailJson, WikiThumbnail::class.java)
 
             pages.add(page)
-
         }
 
         databaseHelper.use {
             select(TABLE_NAME).parseList(articleRowParser)
         }
-
-
 
         return pages
     }

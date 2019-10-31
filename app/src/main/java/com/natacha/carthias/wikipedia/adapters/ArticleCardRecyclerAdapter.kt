@@ -12,8 +12,7 @@ import com.natacha.carthias.wikipedia.models.WikiPage
  */
 
 class ArticleCardRecyclerAdapter : RecyclerView.Adapter<CardHolder>() {
-    val currentResults: ArrayList<WikiPage> = ArrayList<WikiPage>()
-
+    val currentResults : ArrayList<WikiPage> = ArrayList<WikiPage>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardHolder {
         var cardItem = LayoutInflater.from(parent?.context).inflate(R.layout.article_card_item, parent, false)
@@ -27,8 +26,7 @@ class ArticleCardRecyclerAdapter : RecyclerView.Adapter<CardHolder>() {
 //  Update view within view holder
     override fun onBindViewHolder(holder: CardHolder, position: Int) {
         var page = currentResults[position]
-
-    holder?.updateWithPage(page)
+        holder?.updateWithPage(page)
 
     }
 }
